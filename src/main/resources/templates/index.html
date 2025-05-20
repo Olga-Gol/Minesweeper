@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>KittenSweeper</title>
+    <link rel="stylesheet" href="/css/styles.css?v=1">
+</head>
+<body>
+    <div class="main-menu">
+        <div class="title">
+            <h1 class="animated-text">KITTEN</h1>
+            <h1 class="animated-text">SWEEPER</h1>
+        </div>
+        
+        <div class="animated-kitten"></div>
+        
+        <div class="difficulty-select">
+            <h2>Choose Level:</h2>
+            <div class="buttons">
+                <a href="/game?difficulty=EASY" class="button">Easy</a>
+                <a href="/game?difficulty=MEDIUM" class="button">Medium</a>
+                <a href="/game?difficulty=HARD" class="button">Hard</a>
+            </div>
+        </div>
+    </div>
+    
+    <script src="/js/menu.js?v=1"></script>
+</body>
+</html>

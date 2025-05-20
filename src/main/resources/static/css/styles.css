@@ -1,0 +1,204 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #1a1a2e;
+    color: #f0f0f0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; 
+}
+
+/* Main Menu Styles */
+.main-menu {
+    width: 800px;
+    height: 352px;
+    position: relative;
+    background: url('/images/nightCity.png') center center no-repeat;
+    background-size: cover;
+    overflow: hidden;
+}
+
+.title {
+    text-align: center;
+    margin-top: 60px;
+}
+
+.animated-text {
+    font-size: 48px;
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(0, 0, 255, 0.8);
+    margin: 0;
+}
+
+.animated-text span {
+    display: inline-block;
+    animation: float 2s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.animated-kitten {
+    position: absolute;
+    bottom: 80px;
+    left: -32px;
+    width: 32px;
+    height: 32px;
+    background: url('/images/kittens.png') 0 0 no-repeat;
+    background-size: 256px 320px; 
+    transform: scale(2);
+}
+
+.difficulty-select {
+    position: absolute;
+    bottom: 80px;
+    width: 100%;
+    text-align: center;
+}
+
+.difficulty-select h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.button {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #4a4a4a;
+    color: white;
+    text-decoration: none;
+    border: 2px solid #ffffff;
+    border-radius: 4px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.button:hover {
+    background-color: #6a6a6a;
+}
+
+/* Game Page Styles */
+.game-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #1a1a2e;
+}
+
+.game-info {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 800px;
+    padding: 10px;
+    background-color: #1a1a2e;
+    position: relative;
+    z-index: 20;
+}
+
+.timer, .kitten-counter {
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.timer.warning {
+    color: #ff0000;
+}
+
+.game-board {
+    position: relative;
+    background: url('/images/cityImage.jpg') center center no-repeat;
+    background-size: cover;
+    margin: 0 auto;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.tile {
+    position: absolute;
+    background-size: 320px auto; /* 10 tiles * 32px width */
+    width: 32px; 
+    height: 32px;
+    cursor: pointer;
+}
+
+.tile:hover {
+    filter: brightness(1.2);
+}
+
+.overlay, .flag {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 32px;
+    height: 32px;
+    background-size: 320px auto; /* 10 tiles * 32px width */
+    pointer-events: none; 
+}
+
+.kitten {
+    position: absolute;
+    top: auto; 
+    left: 0;
+    width: 100%;
+    height: 100%; 
+    background-size: 256px 320px;
+    transform: scale(1.5);
+    transform-origin: bottom center; 
+    pointer-events: none; 
+}
+
+.game-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%; 
+    background: rgba(0, 0, 0, 0.7);
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+.game-result {
+    font-size: 48px;
+    margin-bottom: 30px;
+    color: #ffffff;
+    font-weight: bold;
+    text-shadow: 0 0 15px rgba(112, 22, 22, 0.7);
+}
+
+.game-buttons {
+    display: flex;
+    gap: 20px;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 5px rgba(0, 255, 0, 0.7); }
+    50% { box-shadow: 0 0 15px rgba(0, 255, 0, 0.9); }
+    100% { box-shadow: 0 0 5px rgba(0, 255, 0, 0.7); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
