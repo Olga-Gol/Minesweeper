@@ -10,6 +10,10 @@ document.addEventListener('DOMContentLoaded', function () {
     let kittenAnimationFrame = 0;
     let animationCounter = 0;
 
+    let musicStarted = false;
+    let mouseTileX = 0;
+    let mouseTileY = 0;
+
     // Constants
     const TILE_SIZE = 32;
     const SHAKE_STRENGTH = 2.0;
@@ -66,9 +70,23 @@ document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('keydown', handleKeyPress);
     playAgainButton.addEventListener('click', resetGame);
 
-    // Start game loop and music
-    gameMusic.play();
+    gameBoard.addEventListener('mousemove', function (event) {
+        const rect = gameBoard.getBoundingClientRect();
+        const mouseX = event.clientX - rect.left;
+        const mouseY = event.clientY - rect.top;
+        mouseTileX = Math.floor(mouseX / TILE_SIZE);
+        mouseTileY = Math.floor(mouseY / TILE_SIZE);
+    });
+    
     requestAnimationFrame(gameLoop);
+
+    gameBoard.addEventListener('click', function firstInteraction() {
+        if (!musicStarted) {
+            gameMusic.play().catch(e => console.log("Audio play error:", e));
+            musicStarted = true;
+            gameBoard.removeEventListener('click', firstInteraction);
+        }
+    }, { once: true });
 
     // Game loop
     function gameLoop(timestamp) {
@@ -92,7 +110,6 @@ document.addEventListener('DOMContentLoaded', function () {
         // Update kitten animation frames
         animationCounter++;
         if (animationCounter % 15 === 0) {
-            //kittenAnimationFrame = (kittenAnimationFrame + 1) % 4;
             updateKittenAnimations(); // Only update kittens instead of re-rendering everything
         }
 
@@ -236,13 +253,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     // If this is a kitten, explicitly handle it
                     if (clickedTile.type === REVEALED_KITTEN ||
                         (clickedTile.type === UNREVEALED_KITTEN && clickedTile.kitten === true)) {
-                        console.log("KITTEN CLICKED! Game should end.");
-                        // Force the tile to be revealed kitten
-                        clickedTile.type = REVEALED_KITTEN;
-                        clickedTile.revealed = true;
-                        // Force game over state
-                        data.board.gameOver = true;
-                        data.gameActive = false;
                     }
                 } catch (e) {
                     console.error('Error accessing tile data:', e);
@@ -270,10 +280,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Space bar for flagging
         if (event.code === 'Space') {
-            // Get mouse position over board
-            const rect = gameBoard.getBoundingClientRect();
-            const x = Math.floor((event.clientX - rect.left) / TILE_SIZE);
-            const y = Math.floor((event.clientY - rect.top) / TILE_SIZE);
+
+            event.preventDefault();
 
             // Send flag toggle request
             fetch(`/game/${gameId}/flag`, {
@@ -281,7 +289,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                body: `x=${x}&y=${y}`
+                body: `x=${mouseTileX}&y=${mouseTileY}`
             })
                 .then(response => response.json())
                 .then(data => {
