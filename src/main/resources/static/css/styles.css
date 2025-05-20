@@ -117,7 +117,6 @@ body {
 .timer, .kitten-counter {
     font-size: 32px;
     font-weight: bold;
-    visibility: hidden;
 }
 
 .timer.warning {
